@@ -1,0 +1,11 @@
+helmfiles:
+  - helmfile-dev-common.yaml
+
+releases:
+  - name: argocd
+    namespace: infra
+    chart: ./charts/argo-cd
+    version: 4.23.0
+    atomic: true
+    values:
+      - env/dev/values-argocd.yaml

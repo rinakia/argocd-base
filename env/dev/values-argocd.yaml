@@ -1,0 +1,22 @@
+
+dex:
+  image:
+    repository: 706357943586.dkr.ecr.ap-northeast-1.amazonaws.com/tada_dex
+    version: v2.37.0
+
+redis:
+  image:
+    repository: 706357943586.dkr.ecr.ap-northeast-1.amazonaws.com/tada_redis
+    version: 7.0.13-alpine
+
+server:
+  extensions:
+    enabled: true
+
+global:
+  image:
+    repository: 706357943586.dkr.ecr.ap-northeast-1.amazonaws.com/tada_argocd-server
+    tag: v2.9.1
+  additionalLabels:
+    component: argocd-server
+
