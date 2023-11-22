@@ -1,0 +1,2 @@
+# argocd-base
+ArgoCD base
