@@ -3,7 +3,7 @@ helmfiles:
 
 releases:
   - name: argocd
-    namespace: infra
+    namespace: argocd
     chart: ./charts/argo-cd
     version: 4.23.0
     atomic: true
