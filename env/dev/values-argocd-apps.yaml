@@ -10,7 +10,7 @@ applications:
      # *Git参照先リポジトリを指定
      repoURL: https://github.com/rinakia/argocd-app.git
      # *Gitターゲットブランチを指定
-     targetRevision: dev
+     targetRevision: main
      # *Gitターゲットパスを指定
      path: env/dev
    destination:

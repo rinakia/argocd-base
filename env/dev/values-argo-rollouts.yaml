@@ -1,0 +1,26 @@
+controller:
+  replicas: 1
+  image:
+    registry: 706357943586.dkr.ecr.ap-northeast-1.amazonaws.com
+    repository: tada_argo-rollouts
+    tag: v1.4.0
+    pullPolicy: Always
+  metrics:
+    enabled: true
+
+
+# disable(enabled: false)
+#dashboard:
+  #image:
+    #registry: 706357943586.dkr.ecr.ap-northeast-1.amazonaws.com
+    #repository: tada_argo-rollouts
+    #tag: v1.4.0
+    #pullPolicy: Always
+
+extraObjects:
+  - apiVersion: v1
+    kind: Secret
+    metadata:
+      name: argo-rollouts-notification-secret
+      namespace: argocd
+
