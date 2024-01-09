@@ -11,6 +11,7 @@ controller:
 
 # disable(enabled: false)
 #dashboard:
+  #enabled: false
   #image:
     #registry: 706357943586.dkr.ecr.ap-northeast-1.amazonaws.com
     #repository: tada_argo-rollouts

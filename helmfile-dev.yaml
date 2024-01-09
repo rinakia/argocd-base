@@ -1,7 +1,12 @@
-helmfiles:
-  - helmfile-dev-common.yaml
 
 releases:
+  - name: nginx-ingress
+    namespace: base
+    chart: ./charts/nginx-ingress
+    values:
+      - ./env/dev/values-nginx-ingress.yaml
+    atomic: true
+
   - name: argocd
     namespace: argocd
     chart: ./charts/argo-cd
@@ -9,3 +14,24 @@ releases:
     atomic: true
     values:
       - env/dev/values-argocd.yaml
+
+  - name: argocd-apps
+    namespace: argocd
+    chart: ./charts/argocd-apps
+    values:
+      - ./env/dev/values-argocd-apps.yaml
+    needs:
+      - argocd
+    atomic: true
+
+  - name: argo-rollouts
+    namespace: argocd
+    chart: ./charts/argo-rollouts
+    values:
+      - ./env/dev/values-argo-rollouts.yaml
+    needs:
+      - argocd
+    atomic: true
+
+helmDefaults:
+  timeout: 600
