@@ -1,0 +1,22 @@
+
+releases:
+
+  - name: linkerd-crds
+    namespace: linkerd
+    chart: ./charts/linkerd-crds
+    atomic: true
+    values:
+      - ./env/dev/values-linkerd-crds.yaml
+
+  - name: linkerd-control-plane
+    namespace: linkerd
+    chart: ./charts/linkerd-control-plane
+    atomic: true
+    values:
+      - ./env/dev/values-linkerd-control-plane.yaml
+    needs:
+      - linkerd-crds
+
+
+helmDefaults:
+  timeout: 60

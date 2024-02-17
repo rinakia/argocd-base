@@ -1,0 +1,30 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: tada-eks
+  region: ap-northeast-1
+  version: "1.26"
+
+vpc:
+  subnets:
+    private:
+      ap-northeast-1b: { id: subnet-0bfbbf3006c8e3b76 }
+      ap-northeast-1c: { id: subnet-0816bd0a8b275f7d4 }
+    public:
+      ap-northeast-1b: { id: subnet-07ea8f0135a1b9327 }
+      ap-northeast-1c: { id: subnet-09b762db558d2fa5f }
+  #sharedNodeSecurityGroup: sg-0123456789
+
+nodeGroups:
+  - name: workers-01
+    instanceType: t3.medium
+    desiredCapacity: 1
+    volumeSize: 50
+    iam: 
+      instanceRoleARN: "arn:aws:iam::706357943586:role/tada-EKSClusterRole"
+    tags: 
+      Name: tada-eks-worker
+
+
+
