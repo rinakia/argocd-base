@@ -34,4 +34,4 @@ override.tf.json
 terraform.rc
 
 # ignore ca.crt
-*values-linkerd-control-plane.yaml
+values-linkerd-control-plane_cert.yaml

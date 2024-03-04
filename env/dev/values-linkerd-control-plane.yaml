@@ -1,0 +1,122 @@
+# -- Trust root certificate (ECDSA). It must be provided during install.
+#identityTrustAnchorsPEM: 
+
+# policy controller configuration
+policyController:
+  image:
+    name: cr.l5d.io/linkerd/policy-controller
+    version: ""
+  logLevel: info
+  resources:
+    cpu:
+      limit: ""
+      request: ""
+    memory:
+      limit: ""
+      request: ""
+
+# proxy configuration
+proxy:
+  image:
+    name: cr.l5d.io/linkerd/proxy
+    version: ""
+  logLevel: warn,linkerd=info,trust_dns=error
+  logFormat: plain
+  resources:
+    cpu:
+      limit: ""
+      request: ""
+    memory:
+      limit: ""
+      request: ""
+  # -- The default allow policy to use when no `Server` selects a pod.  One of: "all-authenticated",
+  # "all-unauthenticated", "cluster-authenticated", "cluster-unauthenticated", "deny"
+  # @default -- "all-unauthenticated"
+  defaultInboundPolicy: "all-unauthenticated"
+  # -- Enable KEP-753 native sidecars
+  # This is an experimental feature. It requires Kubernetes >= 1.29.
+  # If enabled, .proxy.waitBeforeExitSeconds should not be used.
+  nativeSidecar: false
+
+# proxy-init configuration
+proxyInit:
+  image:
+    name: cr.l5d.io/linkerd/proxy-init
+    version: v2.2.4
+  resources:
+    cpu:
+      limit: 100m
+      request: 100m
+    memory:
+      limit: 20Mi
+      request: 20Mi
+
+# network validator configuration
+networkValidator:
+  logLevel: debug
+  logFormat: plain
+
+# controllerImage -- Docker image for the destination and identity components
+controllerImage: cr.l5d.io/linkerd/controller
+# -- Optionally allow a specific container image Tag (or SHA) to be specified for the controllerImage.
+controllerImageVersion: ""
+
+# -- Number of replicas for each control plane pod
+controllerReplicas: 1
+
+# debug configuration
+debugContainer:
+  image:
+    name: cr.l5d.io/linkerd/debug
+    version: ""
+
+identity:
+  # -- If the linkerd-identity-trust-roots ConfigMap has already been created
+  externalCA: false
+  # -- Use [Service Account token Volume projection](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#service-account-token-volume-projection) for pod validation instead of the default token
+  serviceAccountTokenProjection: true
+
+  issuer:
+    scheme: linkerd.io/tls
+    # -- Which scheme is used for the identity issuer secret format
+    tls:
+      # -- Issuer certificate (ECDSA). It must be provided during install.
+      # crtPEM: 
+      # -- Key for the issuer certificate (ECDSA). It must be provided during
+      # install
+      #keyPEM: 
+
+# proxy injector configuration
+proxyInjector:
+  # -- Do not create a secret resource for the proxyInjector webhook.
+  # If this is set to `true`, the value `proxyInjector.caBundle` must be set
+  # or the ca bundle must injected with cert-manager ca injector using
+  # `proxyInjector.injectCaFrom` or `proxyInjector.injectCaFromSecret` (see below).
+  externalSecret: false
+
+  # -- Namespace selector used by admission webhook.
+  namespaceSelector:
+    matchExpressions:
+    - key: kubernetes.io/metadata.name
+      operator: NotIn
+      values:
+      - kube-system
+      - cert-manager
+
+  # -- Object selector used by admission webhook.
+  objectSelector:
+    matchExpressions:
+    - key: linkerd.io/control-plane-component
+      operator: DoesNotExist
+    - key: linkerd.io/cni-resource
+      operator: DoesNotExist
+
+  # -- Certificate for the proxy injector. If not provided and not using an external secret
+  # then Helm will generate one.
+  #crtPEM: 
+
+  # -- Certificate key for the proxy injector. If not provided and not using an external secret
+  # then Helm will generate one.
+  #keyPEM: 
+
+

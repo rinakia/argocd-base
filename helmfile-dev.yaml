@@ -14,6 +14,7 @@ releases:
     atomic: true
     values:
       - ./env/dev/values-linkerd-control-plane.yaml
+      - ./env/dev/values-linkerd-control-plane_cert.yaml
     needs: 
       - linkerd-crds
 

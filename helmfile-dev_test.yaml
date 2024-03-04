@@ -1,4 +1,3 @@
-
 releases:
 
   - name: linkerd-crds
@@ -8,15 +7,39 @@ releases:
     values:
       - ./env/dev/values-linkerd-crds.yaml
 
-  - name: linkerd-control-plane
-    namespace: linkerd
-    chart: ./charts/linkerd-control-plane
+  - name: nginx-ingress
+    namespace: base
+    chart: ./charts/nginx-ingress
     atomic: true
     values:
-      - ./env/dev/values-linkerd-control-plane.yaml
-    needs:
-      - linkerd-crds
+      - ./env/dev/values-nginx-ingress.yaml
 
+  - name: argocd
+    namespace: argocd
+    chart: ./charts/argo-cd
+    version: 4.23.0
+    atomic: true
+    values:
+      - env/dev/values-argocd.yaml
+
+  - name: argocd-apps
+    namespace: argocd
+    chart: ./charts/argocd-apps
+    atomic: true
+    values:
+      - ./env/dev/values-argocd-apps.yaml
+    needs:
+      - argocd
+
+  - name: argo-rollouts
+    namespace: argocd
+    chart: ./charts/argo-rollouts
+    atomic: true
+    values:
+      - ./env/dev/values-argo-rollouts.yaml
+    needs:
+      - argocd
 
 helmDefaults:
   timeout: 60
+

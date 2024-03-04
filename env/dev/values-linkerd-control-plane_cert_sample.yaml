@@ -1,0 +1,70 @@
+# -- Trust root certificate (ECDSA). It must be provided during install.
+identityTrustAnchorsPEM: |
+
+identity:
+  issuer:
+    # -- Which scheme is used for the identity issuer secret format
+    tls:
+      # -- Issuer certificate (ECDSA). It must be provided during install.
+      crtPEM: |
+      # -- Key for the issuer certificate (ECDSA). It must be provided during
+      # install
+      keyPEM: |
+
+ # -- Certificate for the proxy injector. If not provided and not using an external secret
+  # then Helm will generate one.
+  crtPEM: |
+
+  # -- Certificate key for the proxy injector. If not provided and not using an external secret
+  # then Helm will generate one.
+  keyPEM: |
+
+proxyInjector:
+  # -- Certificate for the proxy injector. If not provided and not using an external secret
+  # then Helm will generate one.
+  crtPEM: |
+  # -- Certificate key for the proxy injector. If not provided and not using an external secret
+  # then Helm will generate one.
+  keyPEM: |
+  # -- Bundle of CA certificates for proxy injector.
+  # If not provided nor injected with cert-manager,
+  # then Helm will use the certificate generated for `proxyInjector.crtPEM`.
+  # If `proxyInjector.externalSecret` is set to true, this value, injectCaFrom, or
+  # injectCaFromSecret must be set, as no certificate will be generated.
+  # See the cert-manager [CA Injector Docs](https://cert-manager.io/docs/concepts/ca-injector) for more information.
+  caBundle: |
+
+# service profile validator configuration
+profileValidator:
+  # -- Certificate for the service profile validator. If not provided and not using an external secret
+  # then Helm will generate one.
+  crtPEM: |
+  # -- Certificate key for the service profile validator. If not provided and not using an external secret
+  # then Helm will generate one.
+  keyPEM: |
+  # -- Bundle of CA certificates for proxy injector.
+  # If not provided nor injected with cert-manager,
+  # then Helm will use the certificate generated for `profileValidator.crtPEM`.
+  # If `profileValidator.externalSecret` is set to true, this value, injectCaFrom, or
+  # injectCaFromSecret must be set, as no certificate will be generated.
+  # See the cert-manager [CA Injector Docs](https://cert-manager.io/docs/concepts/ca-injector) for more information.
+  caBundle: |
+
+# policy validator configuration
+policyValidator:
+  # -- Certificate for the policy validator. If not provided and not using an external secret
+  # then Helm will generate one.
+  crtPEM: |
+  # -- Certificate key for the policy validator. If not provided and not using an external secret
+  # then Helm will generate one.
+  keyPEM: |
+  # -- Bundle of CA certificates for proxy injector.
+  # If not provided nor injected with cert-manager,
+  # then Helm will use the certificate generated for `policyValidator.crtPEM`.
+  # If `policyValidator.externalSecret` is set to true, this value, injectCaFrom, or
+  # injectCaFromSecret must be set, as no certificate will be generated.
+  # See the cert-manager [CA Injector Docs](https://cert-manager.io/docs/concepts/ca-injector) for more information.
+  caBundle: |
+
+
+
