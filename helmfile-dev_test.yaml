@@ -1,12 +1,5 @@
 releases:
 
-  - name: linkerd-crds
-    namespace: linkerd
-    chart: ./charts/linkerd-crds
-    atomic: true
-    values:
-      - ./env/dev/values-linkerd-crds.yaml
-
   - name: nginx-ingress
     namespace: base
     chart: ./charts/nginx-ingress
@@ -38,7 +31,7 @@ releases:
     values:
       - ./env/dev/values-argo-rollouts.yaml
     needs:
-      - argocd
+      - argocd-apps
 
 helmDefaults:
   timeout: 60

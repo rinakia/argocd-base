@@ -1,0 +1,16 @@
+apiVersion: k8s.nginx.org/v1
+kind: VirtualServer
+metadata:
+  name: vs-app-spring1
+spec: 
+  # 共通
+  ingressClassName: "base-nginx-01"
+  # 共通
+  #tls:
+    #secret: base-secret-nginx-01
+  # URL
+  host: test.com
+  routes:
+  - path: /
+    # VirtualServerRoute
+    route: vsr-app-spring1

@@ -1,0 +1,23 @@
+apiVersion: k8s.nginx.org/v1
+kind: VirtualServerRoute
+metadata:
+  name: vsr-app-spring1
+spec:
+  # 共通
+  ingressClassName: "base-nginx-01"
+  
+  #URL
+  host: test.com
+  subroutes: 
+  - action:
+      proxy: 
+        rewritePath: /$1
+        # Service名(k8s resource) argocd-application
+        upstream: apl-spring-service
+    path: ~ /?(.*)
+  upstreams: 
+  - lb-method: least_conn
+    name: apl-spring-service
+    next-upstream-tries: 0
+    port: 443
+    service: apl-spring-service
